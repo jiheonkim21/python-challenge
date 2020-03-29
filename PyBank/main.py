@@ -1,8 +1,13 @@
+#Ji-Heon Kim
+#PyBank
+#main.py
+
 import os
 import csv
 
+# Set File Path
+
 csvpath = os.path.join('Resources', 'budget_data.csv')
-output_path = os.path.join('analysis.csv')
 
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter = ',')
@@ -17,7 +22,9 @@ with open(csvpath) as csvfile:
 
     csv_header = next(csvreader)
 
-    # Read each row of data after the header
+    # Go through each row in .csv, assuming each row is another month.
+    # Keep track of total profit and loss as well as keep track of month with greatest increase and greatest decrease in profits.
+
     for row in csvreader:
         number_of_months += 1
         month_change = float(row[1])
@@ -29,6 +36,8 @@ with open(csvpath) as csvfile:
             greatest_decrease = month_change
             greatest_decrease_month = row[0]
 
+    # Print results (Total months, total P/L, average change, and months with greatest increase and decrease in profits) to console
+
     print("Financial Analysis")
     print("----------------------")       
     print(f"Total Months: {number_of_months}")
@@ -36,7 +45,9 @@ with open(csvpath) as csvfile:
     print(f"Average Change: ${round(total_profit_and_loss/number_of_months,2)}")
     print(f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})")
     print(f"Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})")
-     
+
+# Output results to output file "analysis.txt"
+
 outputFile = open("analysis.txt", "w")
 
 outputFile.write("Financial Analysis\n")
